@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import {
   Button,
   Card,
@@ -7,11 +6,6 @@ import {
   CardGroup,
   Col,
   Container,
-  Form,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   Row
 } from "reactstrap";
 
@@ -134,7 +128,7 @@ class Login extends Component {
                         elit, sed do eiusmod tempor incididunt ut labore et
                         dolore magna aliqua.
                       </p>
-                      <Button
+                      <Button 
                         onClick={() => {
                           this.props.history.push("/register");
                         }}

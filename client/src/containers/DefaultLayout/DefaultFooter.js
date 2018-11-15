@@ -15,7 +15,7 @@ class DefaultFooter extends Component {
     return (
       <React.Fragment>
         <span>
-          <a href="javascript:void(0)">MERN Dashboard</a> &copy; 2018 Company Name.
+         MERN Dashboard &copy; 2018 Company Name.
         </span>
       </React.Fragment>
     );

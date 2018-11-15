@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Badge,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
@@ -10,18 +9,17 @@ import {
 } from "reactstrap";
 import PropTypes from "prop-types";
 
-import {
-  AppHeaderDropdown,
-  AppSidebarToggler
-} from "@coreui/react";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
-const propTypes = {
-  children: PropTypes.node
-};
-
-const defaultProps = {};
+import { AppHeaderDropdown, AppSidebarToggler } from "@coreui/react";
 
 class DefaultHeader extends Component {
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.logoutUser();
+  }
+
   render() {
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
@@ -37,7 +35,6 @@ class DefaultHeader extends Component {
           </NavItem>
         </Nav>
         <Nav className="ml-auto" navbar>
-               
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
               <img
@@ -47,60 +44,30 @@ class DefaultHeader extends Component {
               />
             </DropdownToggle>
             <DropdownMenu right style={{ right: "auto" }}>
-              <DropdownItem header tag="div" className="text-center">
-                <strong>Account</strong>
-              </DropdownItem>
-              <DropdownItem>
-                <i className="fa fa-bell-o" /> Updates
-                <Badge color="info">42</Badge>
-              </DropdownItem>
-              <DropdownItem>
-                <i className="fa fa-envelope-o" /> Messages
-                <Badge color="success">42</Badge>
-              </DropdownItem>
-              <DropdownItem>
-                <i className="fa fa-tasks" /> Tasks
-                <Badge color="danger">42</Badge>
-              </DropdownItem>
-              <DropdownItem>
-                <i className="fa fa-comments" /> Comments
-                <Badge color="warning">42</Badge>
-              </DropdownItem>
-              <DropdownItem header tag="div" className="text-center">
-                <strong>Settings</strong>
-              </DropdownItem>
-              <DropdownItem>
-                <i className="fa fa-user" /> Profile
-              </DropdownItem>
-              <DropdownItem>
-                <i className="fa fa-wrench" /> Settings
-              </DropdownItem>
-              <DropdownItem>
-                <i className="fa fa-usd" /> Payments
-                <Badge color="secondary">42</Badge>
-              </DropdownItem>
-              <DropdownItem>
-                <i className="fa fa-file" /> Projects
-                <Badge color="primary">42</Badge>
-              </DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>
-                <i className="fa fa-shield" /> Lock Account
-              </DropdownItem>
-              <DropdownItem>
-                <i className="fa fa-lock" /> Logout
+              <DropdownItem onClick={this.onLogoutClick.bind(this)}>
+                <i className="fa fa-lock" /> logout
               </DropdownItem>
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>
-     
+
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </React.Fragment>
     );
   }
 }
 
-DefaultHeader.propTypes = propTypes;
-DefaultHeader.defaultProps = defaultProps;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
 
-export default DefaultHeader;
+DefaultHeader.propTypes = {
+  children: PropTypes.node,
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(DefaultHeader);
